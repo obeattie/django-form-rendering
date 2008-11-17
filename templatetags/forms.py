@@ -14,6 +14,8 @@ class QuickFormNode(template.Node):
         return super(QuickFormNode, self).__init__(*args, **kwargs)
     
     def render(self, context):
+        # Renders the form in the template as defined in settings.QUICK_FORM_TEMPLATE, or the default of
+        # inc/forms/quick_form.html
         return render_to_string(getattr(settings, 'QUICK_FORM_TEMPLATE', 'inc/forms/quick_form.html'), {
             'form': self.form.resolve(context),
         })
@@ -28,5 +30,6 @@ def quick_form(parser, token):
         assert len(tokens) == 2
     except AssertionError:
         raise template.TemplateSyntaxError, _(u'%r tag requires a form instance as its only argument.') % token.contents.split()[0]
+    # Conveert form_object to a Variable, first checking it isn't in quotes (like a string should be)
     form = template.Variable(check_not_quoted(tokens[0], tokens[1]))
     return QuickFormNode(form=form)
