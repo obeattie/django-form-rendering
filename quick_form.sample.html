@@ -19,7 +19,7 @@
             <dd class="field{% if field.field.required %} required{% endif %}{% if field.errors %} error{% endif %}">
                 {{ field }}
                 {% if field.errors %}
-                    <p class="error">{{ field.errors|join", " }}</p>
+                    <p class="error">{{ field.errors|join:", " }}</p>
                 {% endif %}
                 {% if field.help_text %}
                     {% comment %} ---- NOTE: Field labels are treated as safe strings ---- {% endcomment %}
